@@ -6,7 +6,6 @@ fun longestZigZag(root: TreeNode?): Int {
 
         val nextOnContinue = if(goRightNext) root?.right else root?.left
         val nextOnReset = if(goRightNext) root?.left else root?.right
-
         val continueCount = dfs(nextOnContinue, !goRightNext, count + 1)
         val resetCount = dfs(nextOnReset, goRightNext, 1)
 
