@@ -1,6 +1,6 @@
 class TreeNode(var `val`: Int) {
-    val left: TreeNode? = null
-    val right: TreeNode? = null
+    var left: TreeNode? = null
+    var right: TreeNode? = null
 }
 
 fun maxLevelSum(root: TreeNode?): Int {
