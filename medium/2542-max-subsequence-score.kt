@@ -1,28 +1,24 @@
-import java.util.PriorityQueue
-
 fun maxScore(nums1: IntArray, nums2: IntArray, k: Int): Long {
-    val pairs = Array(nums1.size) { i -> intArrayOf(nums2[i], nums1[i]) }
-    pairs.sortByDescending { it[0] } // nums2 desc
+    val pairs = nums1.indices
+        .map { Pair<Int, Int>(nums1[it], nums2[it]) }
+        .sortedByDescending { it.second }
 
-    val heap = PriorityQueue<Int>() // min-heap of chosen nums1
+    val minHeap =  PriorityQueue<Int>()
     var sum = 0L
-    var best = 0L
+    var max = Long.MIN_VALUE
 
-    for (p in pairs) {
-        val n2 = p[0]
-        val n1 = p[1]
+    for ((num1, num2) in pairs) {
+        minHeap.add(num1)
+        sum += num1
 
-        heap.add(n1)
-        sum += n1.toLong()
+        if (minHeap.size > k) {
+            sum -= minHeap.poll()
+        }  
 
-        if (heap.size > k) {
-            sum -= heap.poll().toLong()
-        }
-
-        if (heap.size == k) {
-            best = maxOf(best, sum * n2.toLong())
+        if (minHeap.size == k) {
+            max = maxOf(max, (num2 * sum).toLong())
         }
     }
 
-    return best
+    return max
 }
